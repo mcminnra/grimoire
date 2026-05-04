@@ -1,5 +1,7 @@
 package main
 
+import "grimoire/cmd"
+
 func main() {
-	println("Init Grimoire")
+	cmd.Execute()
 }
