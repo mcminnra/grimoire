@@ -1,4 +1,3 @@
-
 # Grimoire
 
 ## What this is
@@ -7,6 +6,8 @@ Grimoire is a cli-based journaling tool for video games. The main idea is to pla
 ## How to run
 lint: go mod tidy
 run: go run main.go [commands] [flags]
+
+---
 
 # Learning Mode
 
