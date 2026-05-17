@@ -3,6 +3,7 @@ grimoire
 # Build files
 .zig-cache/
 zig-out/
+zig-pkg/
 *.o
 
 # env file
