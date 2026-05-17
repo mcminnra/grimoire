@@ -4,8 +4,8 @@
 Grimoire is a cli-based journaling tool for video games. The main idea is to play games and write about the experience. Grimoire helps you maintain a collections of files (logs) of games you've played and games you want to play. In many ways, it's a knowledge base tool that is hyperscoped only to video games.
 
 ## How to run
-lint: go mod tidy
-run: go run main.go [commands] [flags]
+run: zig build run
+test: zig build test
 
 ---
 
