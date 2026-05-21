@@ -1,11 +1,19 @@
 # Grimoire
 
 ## What this is
-Grimoire is a cli-based journaling tool for video games. The main idea is to play games and write about the experience. Grimoire helps you maintain a collections of files (logs) of games you've played and games you want to play. In many ways, it's a knowledge base tool that is hyperscoped only to video games.
+Grimoire is a CLI-based personal game tracker and journaling tool. It helps the user maintain a collection of plain-text files (one per game) for games played and games to play. The design treats the collection as a private, durable, portable knowledge artifact — tools are interfaces over the files, not the source of truth.
+
+## Design docs
+Before answering questions about behavior, schema, commands, or architecture, consult these. They are authoritative; this file is a pointer.
+- `docs/design/overview.md` — design thesis, architecture (lib + frontends), config layout, full metadata schema, provider model, refresh semantics, slug/filename rules, examples.
+- `docs/design/cli.md` — `grim` command surface. Cross-references overview.md for the data model; do not duplicate that here.
+
+When the user asks about a design decision, look first in these docs. When they ask you to change a design decision, update the relevant doc.
 
 ## How to run
-run: zig build run
-test: zig build test
+- build: `cargo build`
+- run: `cargo run`
+- test: `cargo test`
 
 ---
 

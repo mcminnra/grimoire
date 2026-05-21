@@ -175,7 +175,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "grimoire"
+name = "grimoire-tracker"
 version = "0.1.0"
 dependencies = [
  "anyhow",
