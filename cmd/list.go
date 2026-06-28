@@ -29,18 +29,9 @@ func init() {
 }
 
 func listGames() error {
-	homeDir, err := os.UserHomeDir()
+	entries, err := os.ReadDir(cfg.LogsDir)
 	if err != nil {
-		return fmt.Errorf("Could not find home directory: %w", err)
-	}
-
-	// TODO: Config checking
-
-	// Get game paths
-	gamesDir := filepath.Join(homeDir, "org", "notes", "games")
-	entries, err := os.ReadDir(gamesDir)
-	if err != nil {
-		return fmt.Errorf("Unable to read log directory: %w", err)
+		return fmt.Errorf("Unable to read log directory %s", cfg.LogsDir)
 	}
 
 	// List games
@@ -48,7 +39,7 @@ func listGames() error {
 	for _, entry := range entries {
 		fmt.Printf("Name: %s\n", entry.Name())
 
-		gameFilePath := filepath.Join(gamesDir, entry.Name())
+		gameFilePath := filepath.Join(cfg.LogsDir, entry.Name())
 		content, err := os.ReadFile(gameFilePath)
 		if err != nil {
 			return fmt.Errorf("Unable to read log %s: %w", gameFilePath, err)
