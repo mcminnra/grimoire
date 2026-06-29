@@ -17,10 +17,10 @@ var rootCmd = &cobra.Command{
 	Long:  "Grimoire is a agentic video game journaling system",
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		var err error
-		cfg, err = core.InitConfig()
-
+		cfg, err = core.GetConfig()
 		if err != nil && cmd.CalledAs() != "init" {
 			fmt.Println(err)
+			fmt.Println("You can initialize or re-initialize the config with `init`")
 			os.Exit(1)
 		}
 
