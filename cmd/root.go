@@ -13,12 +13,13 @@ var cfg core.Config
 
 var rootCmd = &cobra.Command{
 	Use:   "grimoire",
-	Short: "Grimoire is a video game journaling system",
-	Long:  "Grimoire is a video game journaling system",
+	Short: "Grimoire is a agentic video game journaling system",
+	Long:  "Grimoire is a agentic video game journaling system",
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		var err error
 		cfg, err = core.InitConfig()
-		if err != nil {
+
+		if err != nil && cmd.CalledAs() != "init" {
 			fmt.Println(err)
 			os.Exit(1)
 		}
