@@ -78,8 +78,8 @@ func ValidateConfig(config Config) error {
 	return nil
 }
 
-// getConfigPath locates the correct home config location for the user
-func getConfigPath() (string, error) {
+// Path locates the correct home config location for the user
+func Path() (string, error) {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		return "", err
@@ -89,12 +89,27 @@ func getConfigPath() (string, error) {
 	return fullPath, nil
 }
 
+// Exists reports whether a config file already exists on disk
+func Exists() (bool, error) {
+	configPath, err := Path()
+	if err != nil {
+		return false, &ConfigError{Op: "system", Err: fmt.Errorf("Unable to form config location")}
+	}
+	if _, err := os.Stat(configPath); err != nil {
+		if errors.Is(err, fs.ErrNotExist) {
+			return false, nil
+		}
+		return false, &ConfigError{Op: "system", Err: err}
+	}
+	return true, nil
+}
+
 // GetConfig reads config path on disk and returns a Config
 func GetConfig() (Config, error) {
 	var config = Config{}
 
 	// Get config path
-	configPath, err := getConfigPath()
+	configPath, err := Path()
 	if err != nil {
 		return Config{}, &ConfigError{Op: "system", Err: fmt.Errorf("Unable to form config location %s", filepath.Dir(configPath))}
 	}
@@ -126,7 +141,7 @@ func GetConfig() (Config, error) {
 // WriteConfig persists config to disk and returns path written to
 func WriteConfig(config Config) (string, error) {
 	// Get config path
-	configPath, err := getConfigPath()
+	configPath, err := Path()
 	if err != nil {
 		return "", &ConfigError{Op: "system", Err: fmt.Errorf("Unable to form config location")}
 	}
