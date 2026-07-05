@@ -1,4 +1,4 @@
-package core
+package log
 
 type Game struct {
 	Title       string      `yaml:"title"`

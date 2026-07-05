@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"grimoire/core"
+	"grimoire/core/log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -35,7 +35,7 @@ func listGames() error {
 	}
 
 	// List games
-	var inProgressGames []core.Game
+	var inProgressGames []log.Game
 	for _, entry := range entries {
 		fmt.Printf("Name: %s\n", entry.Name())
 
@@ -45,7 +45,7 @@ func listGames() error {
 			return fmt.Errorf("Unable to read log %s: %w", gameFilePath, err)
 		}
 
-		var game core.Game
+		var game log.Game
 		rest, err := frontmatter.Parse(strings.NewReader(string(content)), &game)
 		if err != nil {
 			return fmt.Errorf("Unable to parse log %s: %w", gameFilePath, err)
