@@ -12,16 +12,23 @@ import (
 var cfg config.Config
 
 var rootCmd = &cobra.Command{
-	Use:   "grimoire",
-	Short: "Grimoire is a agentic video game journaling system",
-	Long:  "Grimoire is a agentic video game journaling system",
+	Use:          "grimoire",
+	Short:        "Grimoire is an agentic video game journaling system",
+	Long:         "Grimoire is an agentic video game journaling system",
+	SilenceUsage: true, // Runtime errors shouldn't dump the usage block
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+		// Commands that must work before a config exists; parents walked so completion's subcommands match
+		for c := cmd; c != nil; c = c.Parent() {
+			switch c.Name() {
+			case "init", "help", "completion":
+				return nil
+			}
+		}
+
 		var err error
 		cfg, err = config.GetConfig()
-		if err != nil && cmd.CalledAs() != "init" {
-			fmt.Println(err)
-			fmt.Println("You can initialize or re-initialize the config with `init`")
-			os.Exit(1)
+		if err != nil {
+			return fmt.Errorf("%w\nYou can initialize or re-initialize the config with `init`", err)
 		}
 
 		return nil
