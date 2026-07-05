@@ -61,7 +61,7 @@ func listGames() error {
 		if game.Log.Rating != nil {
 			rating = strconv.Itoa(*game.Log.Rating)
 		}
-		fmt.Printf("%s - %s/5 - %s\n", game.Title, rating, game.Log.Status)
+		fmt.Printf("[%s]\t[%s/5] %s\n", game.Log.Status, rating, game.Title)
 	}
 
 	fmt.Println("\n=== Playing Games ===")
@@ -71,7 +71,7 @@ func listGames() error {
 			if game.Log.Rating != nil {
 				rating = strconv.Itoa(*game.Log.Rating)
 			}
-			fmt.Printf("%s - %s/5 - %s\n", game.Title, rating, game.Log.Status)
+			fmt.Printf("[%s]\t[%s/5] %s\n", game.Log.Status, rating, game.Title)
 		}
 
 	}
