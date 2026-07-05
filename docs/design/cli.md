@@ -10,10 +10,10 @@ Conventions:
 ## Commands
 
 - **grim init**
-    - Initializes config at `~/.config/grimoire/config.yaml` and `keys.yaml`.
-    - Prompts for API keys for enabled providers (IGDB, Steam, SteamGridDB) and any LLM keys used by `recommend` (e.g. Anthropic, OpenAI).
-    - Asks for the grimoire directory location (default `~/grimoire/`).
-    - Idempotent — re-running edits config in place rather than overwriting.
+    - Initializes TOML config at `~/.config/grimoire/config`.
+    - Interactively prompts for the game logs directory; `--logs-dir <path>` skips the prompt for scripted/non-interactive use.
+    - If a config already exists, asks for confirmation before overwriting (interactive) or refuses unless `--force` is passed (non-interactive).
+    - TODO: prompt for provider API keys (IGDB, Steam, SteamGridDB) and LLM keys used by `recommend` once providers land.
 
 - **grim add [name]**
     - Adds a game to the grimoire by creating a new file under the configured collection path.

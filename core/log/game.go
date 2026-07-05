@@ -1,4 +1,4 @@
-package core
+package log
 
 type Game struct {
 	Title       string      `yaml:"title"`
@@ -10,10 +10,11 @@ type Game struct {
 	Cover       *string     `yaml:"cover"`
 	Log         Log         `yaml:"log"`
 	ProviderIds ProviderIds `yaml:"provider_ids"`
+	Review      string      `yaml:"-"` // This is the "rest" of the markdown
 }
 
 type Log struct {
-	Status             string   `yaml:"status"`
+	Status             Status   `yaml:"status"`
 	Rating             *int     `yaml:"rating"`
 	PlayedPlatform     *string  `yaml:"played_platform"`
 	Started            *string  `yaml:"started"`
@@ -21,6 +22,26 @@ type Log struct {
 	AchievementPercent *float32 `yaml:"achievement_percent"`
 	HoursPlayed        *float32 `yaml:"hours_played"`
 	Revisit            bool     `yaml:"revisit"`
+}
+
+type Status string
+
+const (
+	StatusBacklog       Status = "backlog"
+	StatusPlaying       Status = "playing"
+	StatusPlayed        Status = "played"
+	StatusAbandoned     Status = "abandoned"
+	StatusCompleted     Status = "completed"
+	StatusCompletedPlus Status = "completed+"
+	StatusMastered      Status = "mastered"
+)
+
+func (s Status) Valid() bool {
+	switch s {
+	case StatusBacklog, StatusPlaying, StatusPlayed, StatusAbandoned, StatusCompleted, StatusCompletedPlus, StatusMastered:
+		return true
+	}
+	return false
 }
 
 type ProviderIds struct {
