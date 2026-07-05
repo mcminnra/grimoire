@@ -5,6 +5,7 @@ import (
 	"grimoire/core/log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/adrg/frontmatter"
@@ -34,11 +35,9 @@ func listGames() error {
 		return fmt.Errorf("Unable to read log directory %s", cfg.LogsDir)
 	}
 
-	// List games
-	var inProgressGames []log.Game
+	// Get games obj
+	var games []log.Game
 	for _, entry := range entries {
-		fmt.Printf("Name: %s\n", entry.Name())
-
 		gameFilePath := filepath.Join(cfg.LogsDir, entry.Name())
 		content, err := os.ReadFile(gameFilePath)
 		if err != nil {
@@ -50,18 +49,31 @@ func listGames() error {
 		if err != nil {
 			return fmt.Errorf("Unable to parse log %s: %w", gameFilePath, err)
 		}
+		game.Review = strings.TrimSpace(string(rest))
 
-		fmt.Printf("%s // %s\n", game.Title, game.Log.Status)
-		fmt.Println("---")
-		fmt.Printf("%v\n\n", strings.TrimSpace(string(rest)))
-		if game.Log.Status == "playing" {
-			inProgressGames = append(inProgressGames, game)
-		}
+		games = append(games, game)
 	}
 
-	fmt.Println("=== Playing Games ===")
-	for _, game := range inProgressGames {
-		fmt.Printf("%s\n", game.Title)
+	// Output
+	fmt.Println("=== Games ===")
+	for _, game := range games {
+		rating := "?"
+		if game.Log.Rating != nil {
+			rating = strconv.Itoa(*game.Log.Rating)
+		}
+		fmt.Printf("%s - %s/5 - %s\n", game.Title, rating, game.Log.Status)
+	}
+
+	fmt.Println("\n=== Playing Games ===")
+	for _, game := range games {
+		if game.Log.Status == "playing" {
+			rating := "?"
+			if game.Log.Rating != nil {
+				rating = strconv.Itoa(*game.Log.Rating)
+			}
+			fmt.Printf("%s - %s/5 - %s\n", game.Title, rating, game.Log.Status)
+		}
+
 	}
 
 	return nil
