@@ -1,26 +1,33 @@
 <script lang="ts">
-  import Versions from './components/Versions.svelte'
-  import electronLogo from './assets/electron.svg'
+  import Sidebar from '@components/Sidebar.svelte'
+  import Home from '@views/Home.svelte'
+  import Stats from '@views/Stats.svelte'
+  import type { View } from '@lib/nav'
 
-  const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
+  let currentView = $state<View>('home')
 </script>
 
-<img alt="logo" class="logo" src={electronLogo} />
-<div class="creator">Powered by electron-vite</div>
-<div class="text">
-  Build an Electron app with
-  <span class="svelte">Svelte</span>
-  and
-  <span class="ts">TypeScript</span>
+<div class="app">
+  <Sidebar activeView={currentView} onNavigate={(v) => (currentView = v)} />
+  <main>
+    {#if currentView === 'home'}
+      <Home />
+    {:else}
+      <Stats />
+    {/if}
+  </main>
 </div>
-<p class="tip">Please try pressing <code>F12</code> to open the devTool</p>
-<div class="actions">
-  <div class="action">
-    <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">Documentation</a>
-  </div>
-  <div class="action">
-    <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions a11y-missing-attribute-->
-    <a target="_blank" rel="noreferrer" on:click={ipcHandle}>Send IPC</a>
-  </div>
-</div>
-<Versions />
+
+<style>
+  .app {
+    display: flex;
+    height: 100vh;
+  }
+
+  main {
+    flex: 1;
+    overflow: auto;
+    padding: var(--space-4);
+    background: var(--surface);
+  }
+</style>

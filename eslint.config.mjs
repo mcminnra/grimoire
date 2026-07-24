@@ -10,6 +10,10 @@ export default defineConfig(
   {
     files: ['**/*.svelte'],
     languageOptions: {
+      globals: {
+        // Injected at build time from package.json (electron.vite.config.ts)
+        __APP_VERSION__: 'readonly'
+      },
       parserOptions: {
         parser: tseslint.parser
       }

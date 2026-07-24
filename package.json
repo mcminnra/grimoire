@@ -1,6 +1,6 @@
 {
   "name": "grimoire",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "An Electron application with Svelte and TypeScript",
   "main": "./out/main/index.js",
   "author": "example.com",
@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
-    "@electron-toolkit/utils": "^4.0.0"
+    "@electron-toolkit/utils": "^4.0.0",
+    "@lucide/svelte": "^1.26.0"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
