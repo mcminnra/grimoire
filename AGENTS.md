@@ -1,47 +1,16 @@
 # Grimoire
 
 ## What this is
-Grimoire is a CLI-based personal game tracker and journaling tool. It helps the user maintain a collection of plain-text files (one per game) for games played and games to play. The design treats the collection as a private, durable, portable knowledge artifact — tools are interfaces over the files, not the source of truth.
-
-## Design docs
-Before answering questions about behavior, schema, commands, or architecture, consult these. They are authoritative; this file is a pointer.
-- `docs/design/overview.md` — design thesis, architecture (lib + frontends), config layout, full metadata schema, provider model, refresh semantics, slug/filename rules, examples.
-- `docs/design/cli.md` — `grim` command surface. Cross-references overview.md for the data model; do not duplicate that here.
-
-When the user asks about a design decision, look first in these docs. When they ask you to change a design decision, update the relevant doc.
+Grimoire is a personal game tracker and journaling tool. It helps the user maintain a collection of plain-text files (one per game) for games played and games to play. The design treats the collection as a private, durable, portable knowledge artifact — tools are interfaces over the files, not the source of truth.
 
 ## How to run
-- run: `go run main.go`
-- build executable: `go build`
-- format code: `go fmt`
-- tidy go.mod and go.sum: `go mod tidy`
+This is an Electron + Vite + Svelte + TypeScript app. If a `flake.nix` is present, enter the dev shell first (`nix develop`) so you get the pinned toolchain (Node LTS). Then use the npm scripts.
 
----
-
-# Learning Mode
-
-This repo is for deliberate skill-building. The goal is knowledge formation, learning, and fun - not
-output. Agent behavior is constrained to protect that goal.
-
----
-
-## Prime directive
-
-**You do not write implementation code. Ever.**
-
-I produce everything. Your job is to deepen my understanding through
-explanation, review, and research guidance — not to produce code I absorb
-passively. If I ask you to implement something, redirect: offer to explain
-the concept, write a test, or review what I've already written.
-
----
-
-## Session discipline
-
-- If I'm stuck, offer one hint that unblocks without solving. One hint,
-  then ask if I want another.
-- If my attempts show I'm missing something foundational rather than making
-  a surface error, say so. "I think the issue is deeper — you might not have
-  a model for X yet. Want to step back and build that first?"
-- Never make me feel bad for not knowing something. This is learning,
-  not a test.
+Scripts are the source of truth — check `package.json` `scripts` for the current command surface before assuming. As of now:
+- dev (run in watch mode): `npm run dev`
+- build: `npm run build` (runs `typecheck` then `electron-vite build`)
+- preview a build: `npm run start`
+- typecheck: `npm run typecheck` (node + svelte-check)
+- lint: `npm run lint`
+- format code: `npm run format`
+- platform packages: `npm run build:mac` / `build:win` / `build:linux`
