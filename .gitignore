@@ -8,6 +8,7 @@ dist/
 build/
 out/
 *.tsbuildinfo
+*.eslintcache
 
 # Generated JS files (Optional: Use only if you compile TS files directly inside your src folder)
 # src/**/*.js

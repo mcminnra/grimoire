@@ -7,6 +7,8 @@
 // === Document
 
 export type RawDocument = {
+  filepath: string
+  filename: string
   frontmatter: Record<string, unknown> // generic — unknown user keys survive untouched
   body: string // markdown after the frontmatter
 }
