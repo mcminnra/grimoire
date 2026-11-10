@@ -1,0 +1,3 @@
+[build]
+# NOTE: Relative to repo root. Keeps all build artifacts under dist/.
+target-dir = "dist/target"

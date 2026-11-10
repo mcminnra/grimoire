@@ -1,0 +1,4 @@
+allowBuilds:
+  # NOTE: Install script in @pandacss/dev for `panda --watch` only. Its install script is a no-op unless
+  # npm_config_build_from_source=true, which you need if you need to dev from a platform panda doesn't already support
+  '@parcel/watcher': false
