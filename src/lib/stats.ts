@@ -1,4 +1,4 @@
-import { STATUSES, type Log, type Status } from "$lib/log";
+import { STATUSES, type Status, type ValidLog } from "$lib/log";
 
 /** Number of logs with a given status. `status` is null for logs without one. */
 export interface StatusCount {
@@ -20,10 +20,10 @@ export interface TagRating {
  * @param logs Logs to count.
  * @returns One entry per status, including zero counts.
  */
-export function statusCounts(logs: Log[]): StatusCount[] {
+export function statusCounts(logs: ValidLog[]): StatusCount[] {
   const counts = new Map<Status | null, number>();
   for (const log of logs) {
-    const status = log.details.status;
+    const status = log.metadata.details.status;
     counts.set(status, (counts.get(status) ?? 0) + 1);
   }
   return [...STATUSES, null].map((status) => ({
@@ -38,12 +38,12 @@ export function statusCounts(logs: Log[]): StatusCount[] {
  * @param logs Logs to aggregate. Unrated logs are ignored.
  * @returns One entry per tag, highest average first, ties broken by count then name.
  */
-export function averageRatingByTag(logs: Log[]): TagRating[] {
+export function averageRatingByTag(logs: ValidLog[]): TagRating[] {
   const totals = new Map<string, { sum: number; count: number }>();
   for (const log of logs) {
-    const rating = log.details.rating;
+    const rating = log.metadata.details.rating;
     if (rating == null) continue;
-    for (const tag of new Set(log.tags ?? [])) {
+    for (const tag of new Set(log.metadata.tags ?? [])) {
       const total = totals.get(tag) ?? { sum: 0, count: 0 };
       total.sum += rating;
       total.count += 1;

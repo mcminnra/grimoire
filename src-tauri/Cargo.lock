@@ -1147,7 +1147,7 @@ dependencies = [
 
 [[package]]
 name = "grimoire"
-version = "0.2.0-alpha"
+version = "0.0.0"
 dependencies = [
  "jiff 1.0.2",
  "serde",

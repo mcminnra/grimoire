@@ -1,17 +1,19 @@
 <script lang="ts">
     import LogDetail from "$lib/components/LogDetail.svelte";
     import { RATING_CLASSES, STATUS_CLASSES, STATUS_LABELS } from "$lib/logDisplay";
-    import { STATUSES } from "$lib/log";
+    import { isValidLog, STATUSES } from "$lib/log";
+    import { logStore } from "$lib/logStore.svelte";
     import { Select } from "bits-ui";
     import { css } from "styled-system/css";
     import { flex, grid } from "styled-system/patterns";
 
-    let { data } = $props();
+    /** Logs that failed at any stage, in file name order. */
+    const failed = $derived(logStore.logs.filter((log) => !isValidLog(log)));
 
-    /** All logs sorted alphabetically by display title. */
+    /** Valid logs sorted alphabetically by display title. */
     const games = $derived(
-        data.logs.toSorted((a, b) =>
-            a.title.localeCompare(b.title, undefined, {
+        logStore.logs.filter(isValidLog).toSorted((a, b) =>
+            a.metadata.title.localeCompare(b.metadata.title, undefined, {
                 sensitivity: "base",
             }),
         ),
@@ -30,7 +32,7 @@
     const visible = $derived(
         filter === "all"
             ? games
-            : games.filter((log) => log.details.status === filter),
+            : games.filter((log) => log.metadata.details.status === filter),
     );
 
     let selectedFileName = $state<string | null>(null);
@@ -61,7 +63,7 @@
     >
         <div class={flex({ align: "center", gap: "2", fontSize: "xs" })}>
             <span class={css({ color: "bone.300" })}>{visible.length} games</span>
-            {#if data.failed.length}
+            {#if failed.length}
                 <button
                     type="button"
                     onclick={() => (showFailed = true)}
@@ -71,7 +73,7 @@
                         _hover: { textDecoration: "underline" },
                     })}
                 >
-                    {data.failed.length} failed
+                    {failed.length} failed
                 </button>
             {/if}
         </div>
@@ -168,7 +170,8 @@
                             cursor: "pointer",
                             borderTopWidth: "1px",
                             borderColor: "ink.800",
-                            _hover: { bg: "ink.800" },
+                            // NOTE: Having hover skip current row
+                            "&:not([aria-current=true]):hover": { bg: "ink.800" },
                             "&[aria-current=true]": { bg: "arcane.800" },
                         })}
                     >
@@ -182,20 +185,20 @@
                                     _focusVisible: { outline: "1px solid", outlineColor: "arcane.300" },
                                 })}
                             >
-                                {log.title}
+                                {log.metadata.title}
                             </button>
                         </td>
                         <td class={cell}>
-                            {#if log.details.status}
-                                <span class={STATUS_CLASSES[log.details.status]}
-                                    >{STATUS_LABELS[log.details.status]}</span
+                            {#if log.metadata.details.status}
+                                <span class={STATUS_CLASSES[log.metadata.details.status]}
+                                    >{STATUS_LABELS[log.metadata.details.status]}</span
                                 >
                             {/if}
                         </td>
                         <td class={cell}>
-                            {#if log.details.rating}
-                                <span class={RATING_CLASSES[log.details.rating]}
-                                    >{log.details.rating}</span
+                            {#if log.metadata.details.rating}
+                                <span class={RATING_CLASSES[log.metadata.details.rating]}
+                                    >{log.metadata.details.rating}</span
                                 >
                             {/if}
                         </td>
@@ -221,16 +224,16 @@
             <h1 class={css({ fontSize: "xl", fontWeight: "bold", mb: "2" })}>
                 Failed logs
             </h1>
-            {#each data.failed as failed (failed.fileName)}
+            {#each failed as log (log.fileName)}
                 <section class={css({ mb: "4" })}>
-                    <code class={css({ fontWeight: "bold" })}>{failed.fileName}</code>
+                    <code class={css({ fontWeight: "bold" })}>{log.fileName}</code>
                     <pre
                         class={css({
                             mt: "1",
                             fontSize: "xs",
                             whiteSpace: "pre-wrap",
                             color: "ember.100",
-                        })}>{failed.error.message}</pre>
+                        })}>{log.error?.message}</pre>
                 </section>
             {/each}
         {:else if selected}
