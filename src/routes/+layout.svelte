@@ -57,7 +57,8 @@
                         py: "0.5",
                         fontSize: "xs",
                         color: "bone.200",
-                        _hover: { bg: "ink.700", color: "bone.50" },
+                        // NOTE: having hover skip current page
+                        "&:not([aria-current=page]):hover": { bg: "ink.700", color: "bone.50" },
                         _currentPage: { bg: "arcane.800", color: "bone.50" },
                     })}
                 >

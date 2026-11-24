@@ -170,7 +170,8 @@
                             cursor: "pointer",
                             borderTopWidth: "1px",
                             borderColor: "ink.800",
-                            _hover: { bg: "ink.800" },
+                            // NOTE: Having hover skip current row
+                            "&:not([aria-current=true]):hover": { bg: "ink.800" },
                             "&[aria-current=true]": { bg: "arcane.800" },
                         })}
                     >
