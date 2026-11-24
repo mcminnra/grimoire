@@ -1,6 +1,7 @@
 <!--
 @component
 Compact game card with a cover, title, status, and rating. Links to `href`.
+Shows a badge when the game's log has parse errors.
 -->
 <script lang="ts">
     import type { HTMLAttributes } from "svelte/elements";
@@ -14,6 +15,8 @@ Compact game card with a cover, title, status, and rating. Links to `href`.
         coverUrl?: string;
         status?: string;
         rating?: number;
+        /** Number of parse errors on the backing log. */
+        errorCount?: number;
     }
 
     let {
@@ -48,6 +51,23 @@ Compact game card with a cover, title, status, and rating. Links to `href`.
             _hover: { opacity: 0.8 },
         })}
     >
+        {#if game.errorCount}
+            <span
+                title="{game.errorCount} parse error(s)"
+                class={css({
+                    position: "absolute",
+                    top: "1.5",
+                    right: "1.5",
+                    px: "1.5",
+                    rounded: "sm",
+                    fontSize: "xs",
+                    fontWeight: "bold",
+                    bg: "ember.600",
+                    color: "bone.50",
+                })}>!{game.errorCount}</span
+            >
+        {/if}
+
         <!-- Cover -->
         {#if game.coverUrl}
             <img

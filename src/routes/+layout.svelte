@@ -52,7 +52,7 @@
         {/each}
     </nav>
 
-    <main class={css({ flex: "1", overflow: "auto", p: "8" })}>
+    <main class={css({ flex: "1", overflow: "auto", p: "3" })}>
         {@render children()}
     </main>
 </div>
