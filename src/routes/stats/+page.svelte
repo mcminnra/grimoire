@@ -11,7 +11,6 @@
     const tagRatings = $derived(averageRatingByTag(data.logs));
 
     const panel = css({
-        rounded: "md",
         borderWidth: "1px",
         borderColor: "ink.700",
         overflow: "auto",

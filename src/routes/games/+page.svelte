@@ -84,7 +84,6 @@
                     px: "2",
                     py: "0.5",
                     fontSize: "xs",
-                    rounded: "md",
                     borderWidth: "1px",
                     borderColor: "ink.700",
                     bg: "ink.800",
@@ -102,7 +101,6 @@
                     class={css({
                         minW: "36",
                         p: "1",
-                        rounded: "md",
                         borderWidth: "1px",
                         borderColor: "ink.700",
                         bg: "ink.800",
@@ -119,7 +117,6 @@
                                 px: "2",
                                 py: "1",
                                 fontSize: "xs",
-                                rounded: "sm",
                                 cursor: "pointer",
                                 _highlighted: { bg: "ink.700" },
                                 _selected: { color: "arcane.300" },
@@ -139,7 +136,6 @@
             gridColumn: "1",
             gridRow: "2",
             overflow: "auto",
-            rounded: "md",
             borderWidth: "1px",
             borderColor: "ink.700",
         })}
@@ -216,7 +212,6 @@
             gridRow: "2",
             overflow: "auto",
             p: "3",
-            rounded: "md",
             borderWidth: "1px",
             borderColor: "ink.700",
         })}

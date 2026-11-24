@@ -41,7 +41,6 @@ Shows a badge when the game's log has parse errors.
         {href}
         class={css({
             display: "block",
-            rounded: "md",
             borderWidth: "1px",
             borderColor: "ink.700",
             bg: "ink.800",
@@ -59,7 +58,6 @@ Shows a badge when the game's log has parse errors.
                     top: "1.5",
                     right: "1.5",
                     px: "1.5",
-                    rounded: "sm",
                     fontSize: "xs",
                     fontWeight: "bold",
                     bg: "ember.600",
@@ -77,7 +75,6 @@ Shows a badge when the game's log has parse errors.
                     w: "full",
                     aspectRatio: "3 / 4",
                     objectFit: "cover",
-                    roundedTop: "md",
                 })}
             />
         {:else}
@@ -86,7 +83,6 @@ Shows a badge when the game's log has parse errors.
                     w: "full",
                     aspectRatio: "3 / 4",
                     bg: "ink.700",
-                    roundedTop: "md",
                 })}
             ></div>
         {/if}

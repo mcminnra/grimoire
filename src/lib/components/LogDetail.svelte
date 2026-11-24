@@ -70,7 +70,6 @@ Full view of one game log: frontmatter details, tags, and body.
                 class={css({
                     px: "2",
                     py: "0.5",
-                    rounded: "sm",
                     fontSize: "xs",
                     bg: "arcane.800",
                 })}>{tag}</span

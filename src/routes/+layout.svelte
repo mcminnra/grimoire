@@ -30,6 +30,7 @@
             bg: "ink.800",
             borderBottomWidth: "1px",
             borderColor: "ink.700",
+            userSelect: "none",
         })}
     >
         <span class={css({ fontSize: "sm", fontWeight: "bold" })}>Grimoire</span>
@@ -44,7 +45,6 @@
                     class={css({
                         px: "2",
                         py: "0.5",
-                        rounded: "sm",
                         fontSize: "xs",
                         color: "bone.200",
                         _hover: { bg: "ink.700", color: "bone.50" },
