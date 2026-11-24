@@ -15,8 +15,8 @@
         "title": "Grimoire",
         "titleBarStyle": "Transparent",
         "backgroundColor": "#0A0A0D",
-        "width": 800,
-        "height": 600
+        "width": 1400,
+        "height": 1000
       }
     ],
     "security": {
