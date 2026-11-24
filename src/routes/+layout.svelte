@@ -1,10 +1,20 @@
 <script lang="ts">
     import "../app.css";
     import { page } from "$app/state";
+    import { onLogChanged } from "$lib/log";
+    import { logStore } from "$lib/logStore.svelte";
     import { css } from "styled-system/css";
     import { flex } from "styled-system/patterns";
 
     let { children } = $props();
+
+    // Refetch just the changed log whenever the backend reports one
+    $effect(() => {
+        const unlisten = onLogChanged((fileName) => logStore.refresh(fileName));
+        return () => {
+            unlisten.then((stop) => stop());
+        };
+    });
 
     const navItems = [
         { href: "/games", label: "Games" },

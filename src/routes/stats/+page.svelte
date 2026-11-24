@@ -1,14 +1,14 @@
 <script lang="ts">
-    import type { Rating } from "$lib/log";
+    import { isValidLog, type Rating } from "$lib/log";
+    import { logStore } from "$lib/logStore.svelte";
     import { RATING_CLASSES, STATUS_CLASSES, STATUS_LABELS } from "$lib/logDisplay";
     import { averageRatingByTag, statusCounts } from "$lib/stats";
     import { css, cx } from "styled-system/css";
     import { grid } from "styled-system/patterns";
 
-    let { data } = $props();
-
-    const statuses = $derived(statusCounts(data.logs));
-    const tagRatings = $derived(averageRatingByTag(data.logs));
+    const logs = $derived(logStore.logs.filter(isValidLog));
+    const statuses = $derived(statusCounts(logs));
+    const tagRatings = $derived(averageRatingByTag(logs));
 
     const panel = css({
         borderWidth: "1px",
@@ -57,7 +57,7 @@
                 {/each}
                 <tr class={css({ borderTopWidth: "1px", borderColor: "ink.700", fontWeight: "bold" })}>
                     <td class={cell}>Total</td>
-                    <td class={num}>{data.logs.length}</td>
+                    <td class={num}>{logs.length}</td>
                 </tr>
             </tbody>
         </table>

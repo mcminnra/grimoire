@@ -4,11 +4,11 @@ Full view of one game log: frontmatter details, tags, and body.
 -->
 <script lang="ts">
     import { RATING_CLASSES, STATUS_CLASSES, STATUS_LABELS } from "$lib/logDisplay";
-    import type { Log } from "$lib/log";
+    import type { ValidLog } from "$lib/log";
     import { css } from "styled-system/css";
     import { flex, grid } from "styled-system/patterns";
 
-    let { log }: { log: Log } = $props();
+    let { log }: { log: ValidLog } = $props();
 
     /** One row of the details panel. `valueClass` optionally colors the value. */
     interface DetailRow {
@@ -19,7 +19,7 @@ Full view of one game log: frontmatter details, tags, and body.
 
     /** Frontmatter fields shown in the details panel, skipping empty values. */
     const details = $derived.by(() => {
-        const { status, rating, achievementPercent, revisit } = log.details;
+        const { status, rating, achievementPercent, revisit } = log.metadata.details;
         const rows: DetailRow[] = [
             {
                 name: "Status",
@@ -31,10 +31,10 @@ Full view of one game log: frontmatter details, tags, and body.
                 value: rating && `${rating} / 5`,
                 valueClass: rating ? RATING_CLASSES[rating] : undefined,
             },
-            { name: "Platform", value: log.details.playedPlatform },
-            { name: "Started", value: log.details.started },
-            { name: "Finished", value: log.details.finished },
-            { name: "Hours played", value: log.details.hoursPlayed },
+            { name: "Platform", value: log.metadata.details.playedPlatform },
+            { name: "Started", value: log.metadata.details.started },
+            { name: "Finished", value: log.metadata.details.finished },
+            { name: "Hours played", value: log.metadata.details.hoursPlayed },
             {
                 name: "Achievements",
                 value: achievementPercent != null ? `${achievementPercent}%` : null,
@@ -48,7 +48,7 @@ Full view of one game log: frontmatter details, tags, and body.
 </script>
 
 <h1 class={css({ fontSize: "3xl", fontWeight: "bold", mb: "4" })}>
-    {log.title}
+    {log.metadata.title}
 </h1>
 
 <!-- Details -->
@@ -63,9 +63,9 @@ Full view of one game log: frontmatter details, tags, and body.
     </dl>
 {/if}
 
-{#if log.tags?.length}
+{#if log.metadata.tags?.length}
     <div class={flex({ gap: "2", wrap: "wrap", mb: "6" })}>
-        {#each log.tags as tag (tag)}
+        {#each log.metadata.tags as tag (tag)}
             <span
                 class={css({
                     px: "2",

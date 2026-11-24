@@ -1,14 +1,13 @@
 import { error } from "@sveltejs/kit";
-import { loadGameLogs } from "$lib/log";
+import { logStore } from "$lib/logStore.svelte";
 
 // Tauri doesn't have a Node.js server to do proper SSR
 export const ssr = false;
 
-/** Loads all game logs once on boot */
+/** Fills the log store from backend state once on boot. Later changes arrive per log. */
 export async function load() {
   try {
-    const { logs, failed } = await loadGameLogs();
-    return { logs, failed };
+    await logStore.load();
   } catch (e) {
     error(500, `Failed to load game logs: ${e}`);
   }
