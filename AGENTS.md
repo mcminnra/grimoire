@@ -1,0 +1,1 @@
+- NEVER write to a log directory. Only read.

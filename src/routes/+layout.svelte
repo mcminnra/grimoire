@@ -6,53 +6,58 @@
 
     let { children } = $props();
 
-    const navItems = [{ href: "/games", label: "Games" }];
+    const navItems = [
+        { href: "/games", label: "Games" },
+        { href: "/stats", label: "Stats" },
+    ];
 </script>
 
-<div class={flex({ h: "screen", bg: "ink.900", color: "bone.50" })}>
-    <nav
+<div
+    class={flex({
+        direction: "column",
+        h: "screen",
+        bg: "ink.900",
+        color: "bone.50",
+    })}
+>
+    <header
         class={flex({
-            direction: "column",
-            gap: "1",
-            w: "56",
+            align: "center",
+            gap: "4",
+            h: "8",
             flexShrink: "0",
-            p: "4",
+            px: "3",
             bg: "ink.800",
-            borderRightWidth: "1px",
+            borderBottomWidth: "1px",
             borderColor: "ink.700",
+            userSelect: "none",
         })}
     >
-        <span
-            class={css({
-                fontSize: "lg",
-                fontWeight: "bold",
-                px: "3",
-                pb: "4",
-            })}
-        >
-            Grimoire
-        </span>
-        {#each navItems as item (item.href)}
-            <a
-                href={item.href}
-                aria-current={page.url.pathname.startsWith(item.href)
-                    ? "page"
-                    : undefined}
-                class={css({
-                    px: "3",
-                    py: "2",
-                    rounded: "md",
-                    color: "bone.200",
-                    _hover: { bg: "ink.700", color: "bone.50" },
-                    _currentPage: { bg: "arcane.800", color: "bone.50" },
-                })}
-            >
-                {item.label}
-            </a>
-        {/each}
-    </nav>
+        <span class={css({ fontSize: "sm", fontWeight: "bold" })}>Grimoire</span>
 
-    <main class={css({ flex: "1", overflow: "auto", p: "8" })}>
+        <nav class={flex({ align: "center", gap: "1", h: "full" })}>
+            {#each navItems as item (item.href)}
+                <a
+                    href={item.href}
+                    aria-current={page.url.pathname.startsWith(item.href)
+                        ? "page"
+                        : undefined}
+                    class={css({
+                        px: "2",
+                        py: "0.5",
+                        fontSize: "xs",
+                        color: "bone.200",
+                        _hover: { bg: "ink.700", color: "bone.50" },
+                        _currentPage: { bg: "arcane.800", color: "bone.50" },
+                    })}
+                >
+                    {item.label}
+                </a>
+            {/each}
+        </nav>
+    </header>
+
+    <main class={css({ flex: "1", minH: "0", overflow: "auto", p: "3" })}>
         {@render children()}
     </main>
 </div>

@@ -1,4 +1,4 @@
-import { defineConfig, defineTokens } from "@pandacss/dev";
+import { defineConfig, defineGlobalStyles, defineTokens } from "@pandacss/dev";
 
 export const colors = defineTokens.colors({
   ink: {
@@ -75,12 +75,23 @@ export const colors = defineTokens.colors({
   },
 });
 
+// NOTE: styling ::-webkit-scrollbar makes WebKit use classic scrollbars that take layout
+// space, instead of overlay ones drawn on top of content
+const globalCss = defineGlobalStyles({
+  "::-webkit-scrollbar": { width: "2", height: "2" },
+  "::-webkit-scrollbar-track": { bg: "ink.800" },
+  "::-webkit-scrollbar-thumb": { bg: "ink.600" },
+  "::-webkit-scrollbar-thumb:hover": { bg: "ink.500" },
+  "::-webkit-scrollbar-corner": { bg: "ink.800" },
+});
+
 export default defineConfig({
   presets: ["@pandacss/preset-base", "@pandacss/preset-panda"],
   preflight: true,
   include: ["./src/**/*.{js,ts,svelte}"],
   exclude: [],
   outdir: "generated/styled-system",
+  globalCss,
   theme: {
     extend: {
       tokens: { colors },

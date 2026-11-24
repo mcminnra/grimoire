@@ -1,6 +1,6 @@
 [package]
 name = "grimoire"
-version = "0.1.0"
+version = "0.2.0-alpha"
 description = "Video game journaling system"
 authors = [""]
 license = "GPL-3.0-or-later"
@@ -18,7 +18,9 @@ tauri-build = { version = "2", features = [] }
 [dependencies]
 tauri = { version = "2", features = [] }
 serde = { version = "1", features = ["derive"] }
-serde_json = "1"
+jiff = { version = "1.0.2", features = ["serde"] }
+thiserror = "2"
+serde-saphyr = "2.2"
 
 # Read the optimization guideline for more details: https://tauri.app/concept/size/#cargo-configuration
 [profile.release]
